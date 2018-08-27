@@ -55,7 +55,6 @@ public class Rectangle {
         return secondSideLength;
     }
 
-
     public double getSquare() {
 
         return this.firstSideLength * this.secondSideLength;
