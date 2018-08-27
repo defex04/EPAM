@@ -1,34 +1,64 @@
 package com.company.math;
 
 public class Rectangle {
-    private Point A;
-    private Point B;
+    private Point diagonalFirstPoint;
+    private Point diagonalSecondPoint;
 
-    public Rectangle(Point A, Point B) throws Exception {
+    private Pair firstSide;
+    private Pair secondSide;
 
-        if ( (Double.compare(A.getX(), B.getX()) == 0) || (Double.compare(A.getY(), B.getY()) == 0) )  {
+    private double firstSideLength;
+    private double secondSideLength;
+
+
+    public Rectangle(Point diagonalFirstPoint, Point diagonalSecondPoint) throws Exception {
+
+        if ((Double.compare(diagonalFirstPoint.getX(), diagonalSecondPoint.getX()) == 0)
+                || (Double.compare(diagonalFirstPoint.getY(), diagonalSecondPoint.getY()) == 0)) {
             throw new Exception("Неправильно заданы координаты диагонали прямоугольника");
+        } else {
+            this.diagonalFirstPoint = diagonalFirstPoint;
+            this.diagonalSecondPoint = diagonalSecondPoint;
         }
-        else {
-            this.A = A;
-            this.B = B;
-        }
+
+        Pair sides = findRectangleSides(this.diagonalFirstPoint, this.diagonalSecondPoint);
+
+        this.firstSide = (Pair) sides.getA();
+        this.secondSide = (Pair) sides.getB();
+
+        this.firstSideLength = getSideLength(this.firstSide);
+        this.secondSideLength = getSideLength(this.secondSide);
+
     }
 
-    public double getSquare() throws Exception {
-        Pair sides;
-        Pair a;
-        Pair b;
+    public Point getdiagonalFirstPoint() {
+        return diagonalFirstPoint;
+    }
 
-        sides = findRectangleSides(this.A, this.B);
+    public Point getdiagonalSecondPoint() {
+        return diagonalSecondPoint;
+    }
 
-        a = (Pair) sides.getA();
-        b = (Pair) sides.getB();
+    Pair getFirstSide() {
+        return firstSide;
+    }
 
-        double sideA = getSideLength(a);
-        double sideB = getSideLength(b);
+    Pair getSecondSide() {
+        return secondSide;
+    }
 
-        return sideA * sideB;
+    public double getFirstSideLength() {
+        return firstSideLength;
+    }
+
+    public double getSecondSideLength() {
+        return secondSideLength;
+    }
+
+
+    public double getSquare() {
+
+        return this.firstSideLength * this.secondSideLength;
     }
 
     private static Pair<Pair<Point, Point>, Pair<Point, Point>> findRectangleSides(Point A, Point B) throws Exception {
@@ -53,10 +83,6 @@ public class Rectangle {
             result = Math.abs(y2 - y1);
 
         else result = Math.abs(x2 - x1);
-
-        System.out.println("Point: " + "(" + x1 + ", " + y1 + ")");
-        System.out.println("Point: " + "(" + x2 + ", " + y2 + ")");
-        System.out.println("Side length: " + result);
 
         return result;
     }
